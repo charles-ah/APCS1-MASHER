@@ -1,0 +1,1 @@
+boolean notes[] = new boolean [36];
