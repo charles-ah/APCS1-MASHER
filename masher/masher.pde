@@ -4,5 +4,12 @@ char notes[];
 
 void setup
 {
+ size(1700, 1000);; 
+}
+
+void draw
+{
   
 }
+
+
