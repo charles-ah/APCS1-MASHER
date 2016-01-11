@@ -1,3 +1,5 @@
+import processing.sound.*;
+
 
 boolean keyz[] = new boolean [36];
 
@@ -24,12 +26,10 @@ void setup()
 
 void draw()
 {
-  
-  
  for(int i = 0;i<notes.length;i++)
  {
    notes[i].create(4,4);
-   translate(0,30);
+   //translate(0,30);
  }
 
 }

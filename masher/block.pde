@@ -15,10 +15,11 @@ public class block
   
   public void create(int x,int y)
   {
+    fill(#A3E39E);
     rect(x,y,30,30);
-    textFont(f,10);                  // STEP 3 Specify font to be used
-    fill();                         // STEP 4 Specify font color 
-    text(key,x,y);   // STEP 5 Display Text
+    textFont(f,16);                  // STEP 3 Specify font to be used
+    fill(#F2FAFA);                         // STEP 4 Specify font color 
+    text(key,x+11,y+23);   // STEP 5 Display Text
     
   }
 }
