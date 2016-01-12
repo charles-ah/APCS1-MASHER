@@ -5,7 +5,14 @@ boolean keyz[] = new boolean [36];
 
 block notes[];
 
+<<<<<<< HEAD
 int windowWidth,windowLength;
+=======
+void setup
+{
+ size(1700, 1000);
+}
+>>>>>>> 24b65172f6e9965570c5093fb9791b152ce58979
 
 
 
