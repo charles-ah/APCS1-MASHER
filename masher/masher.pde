@@ -42,13 +42,7 @@ void draw()
 {
   println(y);
   int delay=10;
-  for(int i=0;i<10;i++)
-        {
-          fill(#64629B);
-          rect(0+i*140,windowLength-70,windowWidth,30);
-          fill(#F2FAFA);                        
-          text((i+1)%10,i*140+65,windowLength-70+23);
-        }
+  
   //translate(0,10);
   if (j<notes[0].length)
        {
@@ -79,9 +73,15 @@ void draw()
        //clear();
      }
       
+       for(int i=0;i<10;i++)
+        {
+          fill(#64629B);
+          rect(0+i*140,windowLength-70,windowWidth,30);
+          fill(#F2FAFA);                        
+          text((i+1)%10,i*140+65,windowLength-70+23);
+        }
        
-       
-       delay(delay);
+       //delay(delay);
        
        
 }
