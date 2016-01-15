@@ -1,25 +1,43 @@
 public class block
 {
-  int velocity;
-  char key;
-  PFont f;
-  
-  
-  public block(int v,char c)
+  int key;
+  //PFont f;
+  boolean fill;
+  int xCoord;
+  int yCoord;
+  public block(int c,boolean lol)
   {
-    velocity = v;
     key = c;
-    f = createFont("Arial",16,true); // STEP 2 Create Font
-
+    fill = lol;
+    //f = createFont("Arial",16,true); // STEP 2 Create Font
+    xCoord = 0;
+    yCoord = 0;
   }
   
-  public void create(int x,int y)
+  public void create(int y)
   {
-    fill(#A3E39E);
-    rect(x,y,30,30);
-    textFont(f,16);                  // STEP 3 Specify font to be used
-    fill(#F2FAFA);                         // STEP 4 Specify font color 
-    text(key,x+11,y+23);   // STEP 5 Display Text
+     
+    if (key == 0)
+    {
+     xCoord = 9*140; 
+    }
+    else
+    {
+      xCoord=((key-1))*140;
+    }
+    yCoord = y;
+    
+    if (fill)
+    {
+      fill(#A3E39E);
+      rect(xCoord,y,140,30);
+    }
+    else
+    {
+      fill(#000000);
+//      noStroke();
+      rect(xCoord,y,140,30);
+    }
     
   }
 }
