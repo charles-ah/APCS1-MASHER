@@ -5,6 +5,7 @@ public class block
   boolean fill;
   int xCoord;
   int yCoord;
+  int hue;
   public block(int c,boolean lol)
   {
     key = c;
@@ -12,21 +13,7 @@ public class block
     //f = createFont("Arial",16,true); // STEP 2 Create Font
     xCoord = 0;
     yCoord = 0;
-  }
-  
-  public void create(int y)
-  {
-    int hue=#000000;
-    if (key == 0)
-    {
-     xCoord = 9*140+10; 
-    }
-    else
-    {
-      xCoord=((key-1))*140+10;
-    }
-    yCoord = y;
-    
+    hue=#000000;
     if(key==1)
     {
      hue=#A3E39E; 
@@ -67,17 +54,33 @@ public class block
     {
       hue=#DBCC40;
     }
+  }
+  
+  public void create(int y)
+  {                                                                                     
+    
+    if (key == 0)
+    {
+     xCoord = 9*140+65; 
+    }
+    else
+    {
+      xCoord=((key-1))*140+65;
+    }
+    yCoord = y;
+    
+    
     
     if (fill)
     {
       fill(hue);
-      rect(xCoord,y,120,30);
+      ellipse(xCoord,y,60,60);
     }
     else
     {
       fill(#000000);
 //      noStroke();
-      rect(xCoord,y,120,30);
+      ellipse(xCoord,y,60,60);
     }
     
   }
