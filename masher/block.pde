@@ -2,31 +2,18 @@ public class block
 {
   int key;
   //PFont f;
-  boolean fill;
+  int fill;
   int xCoord;
   int yCoord;
-  public block(int c,boolean lol)
+  int hue;
+  public block(int c,int lol)
   {
     key = c;
     fill = lol;
     //f = createFont("Arial",16,true); // STEP 2 Create Font
     xCoord = 0;
     yCoord = 0;
-  }
-  
-  public void create(int y)
-  {
-    int hue=#000000;
-    if (key == 0)
-    {
-     xCoord = 9*140+10; 
-    }
-    else
-    {
-      xCoord=((key-1))*140+10;
-    }
-    yCoord = y;
-    
+    hue=#000000;
     if(key==1)
     {
      hue=#A3E39E; 
@@ -65,19 +52,35 @@ public class block
     }
     if(key==0)
     {
-      hue=#DBCC40;
+      hue=#FC1FE3;
     }
+  }
+  
+  public void create(int y)
+  {                                                                                     
     
-    if (fill)
+    if (key == 0)
     {
-      fill(hue);
-      rect(xCoord,y,120,30);
+     xCoord = 9*width/10+65; 
     }
     else
     {
-      fill(#000000);
+      xCoord=((key-1))*width/10+65;
+    }
+    yCoord = y;
+    
+    
+    
+    if (fill%30==0)
+    {
+      fill(hue);
+      ellipse(xCoord,y,60,60);
+    }
+    else
+    {
+      //fill(#000000);
 //      noStroke();
-      rect(xCoord,y,120,30);
+     // ellipse(xCoord,y,60,60);
     }
     
   }
