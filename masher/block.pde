@@ -6,7 +6,11 @@ public class block
   int xCoord;
   int yCoord;
   int hue;
+<<<<<<< HEAD
   public block(int c,int lol)
+=======
+  public block(int c,boolean lol)
+>>>>>>> 84aa43af0b51f74a3beccd8217f79bd35cab2488
   {
     key = c;
     fill = lol;
@@ -61,11 +65,19 @@ public class block
     
     if (key == 0)
     {
+<<<<<<< HEAD
      xCoord = 9*width/10+65; 
     }
     else
     {
       xCoord=((key-1))*width/10+65;
+=======
+     xCoord = 9*140+65; 
+    }
+    else
+    {
+      xCoord=((key-1))*140+65;
+>>>>>>> 84aa43af0b51f74a3beccd8217f79bd35cab2488
     }
     yCoord = y;
     
@@ -80,7 +92,11 @@ public class block
     {
       //fill(#000000);
 //      noStroke();
+<<<<<<< HEAD
      // ellipse(xCoord,y,60,60);
+=======
+      ellipse(xCoord,y,60,60);
+>>>>>>> 84aa43af0b51f74a3beccd8217f79bd35cab2488
     }
     
   }
