@@ -4,53 +4,52 @@ import ddf.minim.effects.*;
 import ddf.minim.signals.*;
 import ddf.minim.spi.*;
 import ddf.minim.ugens.*;
-Minim minim;
-AudioPlayer song;
-PImage img, img2, img3, soundon, soundoff, black;
+Minim minim, minim1, minim2;
+AudioPlayer song, song1, song2;
+PImage img, img2, img3, soundon, soundoff, black, ret;
 
 //buttons
 float x1 = 298, y1 = 545, w1 = 327, h = 70;
 float x2 = 265, y2 = 628, w2 = 390;
 
+
+//on and off
+int onoff=0;
+
+//pages
+int location;
+//home = 0
+//play = 1
+//creds = 2
+
+
 //masher
-import java.util.*;
-AudioPlayer player;
-AudioInput input;
-AudioMetaData meta;
-PFont f; 
-boolean keyz[] = new boolean [10];
-block notes[][]=new block[10][]; //10 for the 10 keys, second level represents the time of the blocks
-int paused = 0;
-int score=0;
-int j = 0;
-int y = 0;
-int count;
+
 
 
 void setup()
 {
-  //masher
-   fullScreen();
-  frameRate(100);
-  player = minim.loadFile("glorious.mp3");
-  meta = player.getMetaData();
-f = createFont("Arial",16,true);  
-
+ 
   // The font must be located in the sketch's 
   // "data" directory to load successfully
   
   fullScreen();
   minim = new Minim(this);
+   minim1 = new Minim(this);
+     minim2 = new Minim(this);
   // this loads back.mp3 from the data folder
   song = minim.loadFile("back.mp3");
   song.play();
   song.loop();
+  song1 = minim1.loadFile("man.mp3");
+   song2 = minim2.loadFile("creds.mp3");
   img = loadImage("back.jpg");  
   img2 = loadImage("play.PNG");  
   img3 = loadImage("creds.PNG");
   soundon = loadImage("soundOn.png");
   soundoff = loadImage("soundOff.png");
   black = loadImage("black.png");
+   ret = loadImage("ret.png");  
   image(img, 0, 0, width, height);
   image(img2, x1, y1, w1, h);
   image(img3, x2, y2, w2, h);
@@ -59,6 +58,15 @@ f = createFont("Arial",16,true);
 
 void draw()
 {
+  
+   int s = second();
+   textSize(32);
+   PFont font;
+  // The font must be located in the sketch's 
+  // "data" directory to load successfully
+  font = createFont("ARBERKLEY-48", 32);
+  textFont(font);
+ 
   //background(0);
   //stroke(255);
   // we draw the waveform by connecting neighbor values with a line
@@ -75,214 +83,100 @@ void draw()
  
  //buttons
  noFill();
- if(mousePressed){
+ if(mousePressed && location == 0){
   if(mouseX>x1 && mouseX <x1+w1 && mouseY>y1 && mouseY <y1+h){
-     stroke(#9ACAF2);
+   stroke(#9ACAF2);
    println("Play");
+   song.pause();
+   fill(0);
+   clear();
+   song1.play();
+   song1.loop();
+   location =1;
+   image(img, 0, 0, width, height);
+   image(soundoff, width-100, height-100, 100, 100);
+   image(ret, 900, 648);
+  }
+ } 
+  if(mousePressed && location == 0){
+   if(mouseX>x2 && mouseX <x2+w2 && mouseY>y2 && mouseY <y2+h){
+    stroke(#9ACAF2);
+    println("Creds");
+    fill(0);
+    location = 2;
+    clear();
+    image(img, 0, 0, width, height);
+    image(soundoff, width-100, height-100, 100, 100);
     song.pause();
-   fill(0);
-   clear();
-   player.play();
-   playing();
-   {
-    fill(#64629B,127);
-    rect(0+i*width/10,height-160,width/10,20);
-    fill(#F2FAFA);                        
-    text((i+1)%10,i*140+65,height-160+15);
+    song2.play();
+    song2.loop();
+    fill(#E0D3D3);
+    textSize(96);
+    text("Credits", 90, 280);
+    textSize(32);
+    text("By John Park and Charles Zhang", 90, 350);
+    text("Keep it real", 650, 280);
+    text("Songs were somewhat downloaded somehow. We do acknowledge the artists' talents.", 90, 420);
+    text("Shoutout to our homie Samuel Konstantinovich", 90, 490);
+    text("Shoutout to our homies at github to help us keep our previous edits", 90, 560);
+    text("Shoutout to our homies who made the minim library ", 90, 630);
+    image(ret, 900, 648);
+   }
   }
-  
-   Random randgen = new Random(100);
-  for(int i =0;i<notes.length;i++)
-  {
-    notes[i]=new block[(int)(meta.length()/250)];
-    for(int j=0;j<notes[i].length;j++)
-    {
-      notes[i][j] = new block(i,randgen.nextInt());
-    }    
-  }
-  println(meta.length());
-   
-   
-  }
- } 
-  if(mousePressed){
-  if(mouseX>x2 && mouseX <x2+w2 && mouseY>y2 && mouseY <y2+h){
-     stroke(#9ACAF2);
-   println("Creds");
-   fill(0);
-   clear();
-  image(img, 0, 0, width, height);
-  }
- } 
- if(mousePressed){
+ if(mousePressed && onoff==0){
   if(mouseX>width-100 && mouseX <width && mouseY>height-100 && mouseY <height){
    println("Music off");
-    PausePlay();
+   if (location==0 &&  song.isPlaying()){
+    song.pause();
+   }
+   if (location==1 &&  song1.isPlaying()){
+    song1.pause();
+   }
+   if (location==2 &&  song2.isPlaying()){
+    song2.pause();
+   }
+    image(black, width-100, height-100, 100, 100);
+    image(soundon, width-100, height-100, 100, 100);
+    onoff=1;
   }
  } 
+ if(mousePressed && onoff==1){
+ if(mouseX>width-100 && mouseX <width && mouseY>height-100 && mouseY <height){    
+    println("Music on");
+ if (location==0){
+  song.loop();
+ }
+ if (location==1){
+  song1.loop();
+ }
+ if (location==2){
+  song2.loop();
+ }
+  image(black, width-100, height-100, 100, 100);
+  image(soundoff, width-100, height-100, 100, 100);
+  onoff=0;
+ }
+ }
+    if(mousePressed && location == 2){
+     if(mouseX>900 && mouseX <1220 && mouseY>648 && mouseY <772){
+       song2.pause();
+     setup();
+  location =0;
+      }
+     }
+ 
+ if(mousePressed && location == 1){
+     if(mouseX>900 && mouseX <1220 && mouseY>648 && mouseY <772){
+       song1.pause();
+     setup();
+  location =0;
+      }
+     }
+ 
  else{stroke(0);}
 }
 
-void PausePlay(){
-   if ( song.isPlaying() )
-  {
-    song.pause();
-    image(black, width-100, height-100, 100, 100);
-    image(soundon, width-100, height-100, 100, 100);
-  }
-   else
-  {
-    song.loop();
-    image(black, width-100, height-100, 100, 100);
-    image(soundoff, width-100, height-100, 100, 100);
-  }
-}
-
-void playing()
+void play()
 {
-  count++;
-  //background(0);
-  loadScore(width-28,20);
-  //translate(0,10);
-  if (j<notes[0].length)
-       {
-   
-       for(int k=0;k<=j;k++)
-       {
-         for(int i=0;i<notes.length;i++)
-         {
-            notes[i][k].create(y-k*60);
-         }
-         
-            
-       }
-         for(int k=j;k>=0;k--)
-         {
-            notes[0][k].create(y-k*60);           
-         }
-      
-       j++;
-       
-       if(notes[0][notes[0].length-1].yCoord >= height+60 || !player.isPlaying())
-       {
-        player.close();
-        clear();
-        loadGameOver();
-        //text("GAME OVER",700,350);
-       }
-       else
-       {
-         
-         for(int i=0;i<10;i++)
-          {
-            fill(#64629B,127);
-            
-            if(keyPressed && (key >= '0' && key <= '9') && Integer.parseInt(key+"") == i)
-            {
-              fill(#F2FAFA);
-              if(key=='0')
-              {
-                rect(0+9*width/10,height-160,width/10,20);
-              }
-              else
-              {
-               rect(0+(i-1)*width/10,height-160,width/10,20); 
-              }
   
-              fill(#F2FAFA);                        
-              text((i+1)%10,i*width/10+65,height-160+15);              
-            }
-            else
-            {
-              rect(0+i*width/10,height-160,width/10,20);
-  
-              fill(#F2FAFA);                        
-              text((i+1)%10,i*width/10+65,height-160+15);
-            }
-          } 
-       }
-       
-         y+=5;
-     }
-     else
-     {
-       j=notes[0].length-1;
-       //println("end");
-       //clear();
-     }
-      
-      
-       
-       //delay(delay);
-       
-       
-       
-}
-
-
-boolean track(int i,int j)
-{
-  if (notes[i][j].yCoord>= height-160-60 && notes[i][j].yCoord<= height-160+60)
-  { 
-    return true;
-  }
-  
-  return false;
-}
-
-void keyPressed()
-{
- //for(int i = 0;i<notes.length;i++)
- //{
-   if((int)key==32)
-   {
-    paused++;
-    if(paused%2!=0)
-    {
-     //textFont(f,16);                  // STEP 3 Specify font to be used
-     //fill(#FFFFFF);
-     //text("PAUSED",width/2,height/2);
-     player.pause();
-     noLoop(); 
-    }
-    else
-    {
-      clear();
-      player.play();
-     loop(); 
-    }
-   }
-   
-   if(key >= '0' && key <= '9')
-   {
-     int keyInt=Integer.parseInt(key+"");
-     for(int j=0;j<notes[keyInt].length;j++)
-      {
-       if(key == Integer.toString(notes[keyInt][j].key).charAt(0) && track(keyInt,j))
-       {  
-         notes[keyInt][j].hue = 0;//#FFFFFF;
-         score++;
-         break;
-       }
-      }
-   }
-  
- //}
-}
-
-
-void loadGameOver()
-{
-    text("SCORE: "+(score-notes[0].length),width/2,height-160);
-}
-
-void loadScore(int x,int y)
-{
-  //background(0);
-   fill(0);    // black rectangle = background for information
-  //noStroke();
-  rect(width-30,0, 20, 20);
-  fill(#FFFFFF);  // Text
-  
-  text(""+(score-notes[0].length),x,y);
 }
