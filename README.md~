@@ -51,3 +51,9 @@ Developmental Stages:
 6.      Have some sort of background on the screen. Add a homepage/start page. 
 
 The minimum product of this project would be a version that only include one song, and that will have a scoreboard that account for successions with the melody. No homepage or any other features.
+
+LOG
+
+1/20/16: Using the Minim library to play sound files.
+
+1/21/16: Changed the keys to ASD and LEFT DOWN RIGHT keys
