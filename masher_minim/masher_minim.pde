@@ -21,7 +21,10 @@ char keyz[] = {'a','s','d','j','k','l'};
 
 block notes[][]=new block[6][]; //10 for the 10 keys, second level represents the time of the blocks
 
- String file="glorious.mp3";
+ArrayList<ArrayList<block>> beats = new ArrayList<ArrayList<block>>(6);
+ArrayList<block> inner = new ArrayList<block>(1);
+
+ String file="tougenkyou.mp3";
 
 int paused = 0;
 int state=0;
@@ -35,6 +38,7 @@ void setup()
   
   beat = new BeatDetect();
   beat.setSensitivity(1000);
+  beat.detectMode(BeatDetect.FREQ_ENERGY);
   minim = new Minim(this);
   player = minim.loadFile(file);
   meta = player.getMetaData();
@@ -51,14 +55,16 @@ void setup()
   
   
    Random randgen = new Random(10);
-  for(int i =0;i<notes.length;i++)
-  {
-    notes[i]=new block[(int)(meta.length()/250)];
-    for(int j=0;j<notes[i].length;j++)
-    {
-      notes[i][j] = new block(keyz[i],randgen.nextInt());
-    }    
+   println(beats.size());
+   //beats= new ArrayList(new ArrayList<block>());
+  for(int i =0;i<6;i++)
+  {  
+    beats.add(inner);
+    inner.add(new block(keyz[i],1));
+    inner = new ArrayList<block>();
   }
+  
+  println(beats.size());
   println(meta.length());
   state=1;
 }
@@ -73,15 +79,26 @@ void draw()
      {
        player.play();
        beat.detect(player.mix);
-       /*
-       if(beat.isOnset())
-       {
-         notes[(int)(5*Math.random())][]
-       }
-       */
        println(beat.isOnset());
+       if(beat.isKick()||beat.isSnare()||beat.isHat())
+       {
+         for(int i =0;i<6;i++)
+          {
+            
+            //notes[i][notes[i].length-1] = new block(keyz[i],(int)Math.random());//randgen.nextInt());
+            (beats.get(i)).add(new block(keyz[i],(int)(35*Math.random())));
+          }
+          
+       }
+       
+       //println(beat.isOnset());
        
        play();
+     }
+     if(state == 2)
+     {
+       clear();
+       text("PAUSED",width/2,height/2);
      }
 }
 
@@ -93,22 +110,25 @@ void play()
   //background(0);
   loadScore(width-28,20);
   //translate(0,10);
-  if (j<notes[0].length)
+  println(beats.size());
+  if (j<=(beats.get(0)).size())
        {
-       for(int k=0;k<=j;k++)
+       for(int k=0;k<j;k++)
        {
-         for(int i=0;i<notes.length;i++)
+         for(int i=0;i<beats.size();i++)
          {
-           if(notes[i][k].yCoord <= height)
+           if((beats.get(i)).get(k).yCoord <= height)
            {
-            notes[i][k].create(y-k*60);
+            ((beats.get(i)).get(k)).create();
+            ((beats.get(i)).get(k)).yCoord+=5;
+            
            }
          }     
        }
        
        j++;
        
-       if(notes[0][notes[0].length-1].yCoord >= height+60 || !player.isPlaying())
+       if((beats.get(0)).get((beats.get(0)).size()-1).yCoord >= height+60 || !player.isPlaying())
        {
         player.close();
         clear();
@@ -120,11 +140,11 @@ void play()
          makekeys();
        }
        
-         y+=5;
+         //y+=5;
      }
      else
      {
-       j=notes[0].length-1;
+       j=(beats.get(0)).size()-1;
        //println("end");
        //clear();
      }
@@ -139,7 +159,7 @@ void play()
 
 boolean track(int i,int j)
 {
-  if (notes[i][j].yCoord >= height-160-60 && notes[i][j].yCoord <= height-160+60)
+  if ((beats.get(i)).get(j).yCoord >= height-400-60 && (beats.get(i)).get(j).yCoord <= height-400+90)
   { 
     return true;
   }
@@ -157,11 +177,13 @@ void keyPressed()
     if(paused%2!=0)
     {
      player.pause();
-     noLoop(); 
+     //noLoop(); 
+     state=2;
     }
     else
     {
-      clear();
+      background(0);
+      state = 1;
       player.play();
      loop(); 
     }
@@ -169,11 +191,11 @@ void keyPressed()
    
    if(key=='a')
    {
-     for(int j=0;j<notes[0].length;j++)
+     for(int j=0;j<(beats.get(0)).size();j++)
      {
         if(track(0,j))
        {  
-         notes[0][j].hue = 0;//#FFFFFF;
+         (beats.get(0)).get(j).hue = 0;//#FFFFFF;
          score++;
          break;
        }
@@ -181,11 +203,11 @@ void keyPressed()
    }
    if(key=='s')
    {
-     for(int j=0;j<notes[1].length;j++)
+     for(int j=0;j<(beats.get(1)).size();j++)
      {
-        if(track(1,j))
+        if(track(0,j))
        {  
-         notes[1][j].hue = 0;//#FFFFFF;
+         (beats.get(1)).get(j).hue = 0;//#FFFFFF;
          score++;
          break;
        }
@@ -193,11 +215,11 @@ void keyPressed()
    }
    if(key=='d')
    {
-     for(int j=0;j<notes[2].length;j++)
+     for(int j=0;j<(beats.get(2)).size();j++)
      {
-        if(track(2,j))
+        if(track(0,j))
        {  
-         notes[2][j].hue = 0;//#FFFFFF;
+         (beats.get(2)).get(j).hue = 0;//#FFFFFF;
          score++;
          break;
        }
@@ -205,11 +227,11 @@ void keyPressed()
    }
    if(key=='j')
    {
-     for(int j=0;j<notes[3].length;j++)
+     for(int j=0;j<(beats.get(3)).size();j++)
      {
-        if(track(3,j))
+        if(track(0,j))
        {  
-         notes[3][j].hue = 0;//#FFFFFF;
+         (beats.get(3)).get(j).hue = 0;//#FFFFFF;
          score++;
          break;
        }
@@ -217,11 +239,11 @@ void keyPressed()
    }
    if(key=='k')
    {
-     for(int j=0;j<notes[4].length;j++)
+     for(int j=0;j<(beats.get(4)).size();j++)
      {
-        if(track(4,j))
+        if(track(0,j))
        {  
-         notes[4][j].hue = 0;//#FFFFFF;
+         (beats.get(4)).get(j).hue = 0;//#FFFFFF;
          score++;
          break;
        }
@@ -229,11 +251,11 @@ void keyPressed()
    }
    if(key=='l')
    {
-     for(int j=0;j<notes[5].length;j++)
+     for(int j=0;j<(beats.get(5)).size();j++)
      {
-        if(track(5,j))
+        if(track(0,j))
        {  
-         notes[5][j].hue = 0;//#FFFFFF;
+         (beats.get(5)).get(j).hue = 0;//#FFFFFF;
          score++;
          break;
        }
@@ -248,7 +270,7 @@ void keyPressed()
 void loadGameOver()
 {
     image(img, 0, 0,width,height);
-    text("SCORE: "+(score-notes[0].length),width/2,height-160);
+    //text("SCORE: "+(score-notes[0].length),width/2,height-400);
 }
 
 void loadScore(int x,int y)
@@ -273,22 +295,22 @@ void makekeys()
               fill(#F2FAFA);
               if(i==5)
               {
-                rect(0+5*width/6,height-160,width/6,20);
+                rect(0+5*width/6,height-400,width/6,20);
               }
               else
               {
-               rect(0+i*width/6,height-160,width/6,20); 
+               rect(0+i*width/6,height-400,width/6,20); 
               }
   
               fill(#F2FAFA);                 
-              text(keyz[i],i*width/6+width/12,height-160+15);              
+              text(keyz[i],i*width/6+width/12,height-400+15);              
             }
             else
             {
-              rect(0+i*width/6,height-160,width/6,20);
+              rect(0+i*width/6,height-400,width/6,20);
   
               fill(#F2FAFA);                        
-              text(keyz[i],i*width/6+width/12,height-160+15);
+              text(keyz[i],i*width/6+width/12,height-400+15);
             }
           } 
 }
