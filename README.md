@@ -61,3 +61,6 @@ LOG
 1/22/16: Changed the keys to use ASD and JKL
 
 1/23/16 - 1/24/16: Beats now synchronize with the song. Using 2D arraylists and Minim to achive this. From now on refer to masher_minim.
+
+1/24/16 - Finessed syncrhronizing using minim and 2D arrays. (Notes come down at the appropriate time). Main Menu and Credits page is completed.
+
