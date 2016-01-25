@@ -21,10 +21,10 @@ char keyz[] = {'a','s','d','j','k','l'};
 
 block notes[][]=new block[6][]; //10 for the 10 keys, second level represents the time of the blocks
 
-ArrayList<ArrayList<block>> beats = new ArrayList<ArrayList<block>>(6);
+ArrayList<ArrayList<block>> beats = new ArrayList<ArrayList<block>>(0);
 ArrayList<block> inner = new ArrayList<block>(1);
 
- String file="tougenkyou.mp3";
+ String file="glorious.mp3";
 
 int paused = 0;
 int state=0;
@@ -82,11 +82,13 @@ void draw()
        println(beat.isOnset());
        if(beat.isKick()||beat.isSnare()||beat.isHat())
        {
+         //(beats.get(3)).add(new block(keyz[3],0));
          for(int i =0;i<6;i++)
           {
             
             //notes[i][notes[i].length-1] = new block(keyz[i],(int)Math.random());//randgen.nextInt());
             (beats.get(i)).add(new block(keyz[i],(int)(35*Math.random())));
+            (beats.get(i)).add(new block(keyz[i],1));
           }
           
        }
@@ -100,11 +102,26 @@ void draw()
        clear();
        text("PAUSED",width/2,height/2);
      }
+     
+     if(meta.length()/1000-player.position()/1000==0)
+       {
+         println("end");
+        player.close();
+        clear();
+        loadGameOver();
+        //text("GAME OVER",700,350);
+       }
+       else
+       {
+         makekeys();
+       }
 }
 
 void play()
 {
-  count++;
+  println(player.position());
+  println(meta.length());
+  count+=0.001;
   //println(hz.asHz());
   //println(hz.asMidiNote());
   //background(0);
@@ -128,17 +145,7 @@ void play()
        
        j++;
        
-       if((beats.get(0)).get((beats.get(0)).size()-1).yCoord >= height+60 || !player.isPlaying())
-       {
-        player.close();
-        clear();
-        loadGameOver();
-        //text("GAME OVER",700,350);
-       }
-       else
-       {
-         makekeys();
-       }
+       
        
          //y+=5;
      }
@@ -159,7 +166,7 @@ void play()
 
 boolean track(int i,int j)
 {
-  if ((beats.get(i)).get(j).yCoord >= height-400-60 && (beats.get(i)).get(j).yCoord <= height-400+90)
+  if ((beats.get(i)).get(j).yCoord >= height-400-90 && (beats.get(i)).get(j).yCoord <= height-400+110)
   { 
     return true;
   }

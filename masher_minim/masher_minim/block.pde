@@ -76,7 +76,7 @@ public class block
     
     
     
-    if (fill%7==0)
+    if (fill%11==0)
     {
       fill(hue);
       ellipse(xCoord,yCoord,60,60);
