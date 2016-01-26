@@ -26,11 +26,8 @@ int location;
 //home = 0
 //play = 1
 //creds = 2
-
-
-//masher
-
-
+//playing = 3
+//gameover = 4
 
 void setup()
 {
@@ -65,6 +62,7 @@ void setup()
   image(img2, x1, y1, w1, h);
   image(img3, x2, y2, w2, h);
   image(soundoff, width-100, height-100, 100, 100);
+  image(soundon, width-100, height-200, 100, 100);
 }
 
 void draw()
@@ -120,7 +118,7 @@ void draw()
       text("Andrea Bocelli: Time to Say Goodbye", 100, 580);
       text("Nightcore - Glorious Days", 100, 670);
       text("Phoenix - 1901", 100, 750);
-      
+      image(soundon, width-100, height-200, 100, 100);
       //SONGS BUTTONS
     }
   } 
@@ -151,10 +149,11 @@ void draw()
       text("Shoutout to our homies at github to help us keep our previous edits", 90, 560);
       text("Shoutout to our homies who made the minim library ", 90, 630);
       image(ret, 900, 648);
+      image(soundon, width-100, height-200, 100, 100);
     }
   }
 
-
+//Turning sound on and off
   if (mousePressed && onoff==0) {
     if (mouseX>width-100 && mouseX <width && mouseY>height-100 && mouseY <height) {
       println("Music off");
@@ -167,34 +166,33 @@ void draw()
       if (location==2 &&  song2.isPlaying()) {
         song2.pause();
       }
-      image(black, width-100, height-100, 100, 100);
-      image(soundon, width-100, height-100, 100, 100);
+      //image(black, width-100, height-100, 100, 100);
+      //image(soundon, width-100, height-100, 100, 100);
       onoff=1;
     }
   } 
 
+ if (mousePressed && onoff==1) {
 
-  //MUSIC ON AND OFF
-  if (mousePressed && onoff==1) {
+   if (mouseX>width-100 && mouseX <width && mouseY>height-200 && mouseY <height-100) {    
+     println("Music on");
 
-    if (mouseX>width-100 && mouseX <width && mouseY>height-100 && mouseY <height) {    
-      println("Music on");
-
-      if (location==0) {
-        song.play();
-      }
-      if (location==1) {
-        song1.play();
-      }
-      if (location==2) {
-        song2.play();
-      }
-      image(black, width-100, height-100, 100, 100);
-      image(soundoff, width-100, height-100, 100, 100);
-      onoff=0;
-    }
+     if (location==0) {
+       song.loop();
+     }
+     if (location==1) {
+       song1.loop();
+     }
+     if (location==2) {
+       song2.loop();
+     }
+     //image(black, width-100, height-100, 100, 100);
+     //image(soundoff, width-100, height-100, 100, 100);
+     onoff=0;
+   }
   }
 
+//Going back or main menu buttons
   if (mousePressed && location == 2) {
     if (mouseX>900 && mouseX <1220 && mouseY>648 && mouseY <772) {
       song2.pause();
@@ -229,7 +227,7 @@ void draw()
   if (mousePressed && location == 1) {
    if (mouseX>100 && mouseX <912 && mouseY>285 && mouseY <315) {
      location = 3;
-     println("asdjknaskdna");
+     println("Lean On");
       clear();
       font = createFont("Arial",16,true);
       textFont(font);
@@ -242,7 +240,7 @@ void draw()
   if (mousePressed && location == 1) {
    if (mouseX>100 && mouseX <564 && mouseY>370 && mouseY <400) {
      location = 3;
-     println("asdjknaskdna");
+     println("The Reason");
       clear();
       font = createFont("Arial",4,true);
       setup1("s2.mp3");
@@ -254,7 +252,7 @@ void draw()
   if (mousePressed && location == 1) {
    if (mouseX>100 && mouseX <371 && mouseY>460 && mouseY <490) {
      location = 3;
-     println("asdjknaskdna");
+     println("Halo");
       clear();
       font = createFont("Arial",16,true);
       setup1("s3.mp3");
@@ -265,7 +263,7 @@ void draw()
   if (mousePressed && location == 1) {
    if (mouseX>100 && mouseX <764 && mouseY>550 && mouseY <580) {
      location = 3;
-     println("asdjknaskdna");
+     println("Time To Say Goodbye");
       clear();
       font = createFont("Arial",16,true);
       setup1("s4.mp3");
@@ -276,7 +274,7 @@ void draw()
   if (mousePressed && location == 1) {
   if (mouseX>100 && mouseX <554 && mouseY>640 && mouseY<670) {
     location = 3;
-    println("asdjknaskdna");
+    println("Glorious");
       clear();
       font = createFont("Arial",10,true);
       textFont(font);
@@ -288,7 +286,7 @@ void draw()
   if (mousePressed && location == 1) {
    if (mouseX>100 && mouseX <361 && mouseY>720 && mouseY <750) {
      location = 3;
-     println("asdjknaskdna");
+     println("1901");
       clear();
       font = createFont("Arial",16,true);
       setup1("s6.mp3");
@@ -304,7 +302,7 @@ void draw()
   }
 }
 
-
+//End of the song
 void gameover()
 {  
   clear();
