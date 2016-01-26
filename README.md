@@ -62,7 +62,7 @@ LOG
 
 1/22/16: Changed the keys to use ASD and JKL
 
-<<<<<<< HEAD
+
 1/23/16 - 1/24/16: Beats now synchronize with the song. Using 2D arraylists and Minim to achive this. From now on refer to masher_minim. Fixed many bugs.
 
 1/25/16: I (Charles) combined the actual game with John's homepage/song selection pages. The keys to play are now just ASDJ. Implemented score system including deduction of points for incorrect playing.
@@ -74,12 +74,7 @@ First go into APCS1-MASHER/homepage and open homepage.pde.
 
 Then run it. To select songs click on PLAY and then click on any song name.
 
-When playing the song, use the ASDJ keys to hit the beats as they pass through the hitboxes near the bottom. When the song ends your score (+1 for correctly matching with a beat and -1 otherwise) with be displayed along with a button directing you back to teh main menu. 
-=======
-1/23/16 - 1/24/16: Beats now synchronize with the song. Using 2D arraylists and Minim to achive this. From now on refer to masher_minim.
+When playing the song, use the ASDJ keys to hit the beats as they pass through the hitboxes near the bottom. When the song ends your score (+1 for correctly matching with a beat and -1 otherwise) with be displayed along with a button directing you back to the main menu. 
 
-1/24/16 - Finessed syncrhronizing using minim and 2D arrays. (Notes come down at the appropriate time). Main Menu and Credits page is completed.
 
-1/24/16 - Added 6 songs with the auto-synchronize. 
 
->>>>>>> a3b86f3912fa4d6b668558c588d98e1afeed7c03
