@@ -57,3 +57,9 @@ LOG
 1/20/16: Using the Minim library to play sound files.
 
 1/21/16: Changed the keys to ASD and LEFT DOWN RIGHT keys
+
+1/22/16: Changed the keys to use ASD and JKL
+
+1/23/16 - 1/24/16: Beats now synchronize with the song. Using 2D arraylists and Minim to achive this. From now on refer to masher_minim. Fixed many bugs.
+
+1/25/16: I (Charles) combined the actual game with John's homepage/song selection pages. The keys to play are now just ASDJ. Implemented score system including deduction of points for incorrect playing.
