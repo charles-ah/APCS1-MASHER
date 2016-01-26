@@ -52,6 +52,8 @@ Developmental Stages:
 
 The minimum product of this project would be a version that only include one song, and that will have a scoreboard that account for successions with the melody. No homepage or any other features.
 
+Possible Defects: For some reason, clicking play goes directly to playing one of the songs instead of listening out the options. This happens occasionally, and I do not understand why. Charles claims that it works fine on his computer.
+
 LOG
 
 1/20/16: Using the Minim library to play sound files.
@@ -63,4 +65,6 @@ LOG
 1/23/16 - 1/24/16: Beats now synchronize with the song. Using 2D arraylists and Minim to achive this. From now on refer to masher_minim.
 
 1/24/16 - Finessed syncrhronizing using minim and 2D arrays. (Notes come down at the appropriate time). Main Menu and Credits page is completed.
+
+1/24/16 - Added 6 songs with the auto-synchronize. 
 
